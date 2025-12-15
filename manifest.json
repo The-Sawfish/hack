@@ -1,0 +1,13 @@
+{
+  "name": "Chrome Bookmarklet Hacks",
+  "short_name": "Bookmarklet Hacks",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "description": "Chrome-only bookmarklet demos and fun hacks",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
