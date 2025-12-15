@@ -7,50 +7,90 @@
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#020617" />
   <style>
-    :root{--bg:#020617;--panel:#020617;--border:#1e293b;--text:#e5e7eb;--muted:#94a3b8;--accent:#7c3aed;--accent2:#2563eb;--warn:#f59e0b}
-    *{box-sizing:border-box}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:radial-gradient(1200px 600px at 10% -10%,#111827,transparent),var(--bg);color:var(--text)}
-    header{padding:1.25rem 2rem;background:linear-gradient(135deg,var(--accent2),var(--accent));box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    header .row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    header h1{margin:0;font-size:1.25rem}
-    nav a{color:#fff;text-decoration:none;margin-right:1rem;opacity:.9}
-    nav a:hover{opacity:1;text-decoration:underline}
-    main{padding:2rem;max-width:1100px;margin:auto}
-    .grid{display:grid;grid-template-columns:280px 1fr;gap:1.5rem}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-    .sidebar{background:rgba(2,6,23,.7);border:1px solid var(--border);border-radius:1rem;padding:1rem}
-    .sidebar h3{margin-top:0}
-    .sidebar ul{list-style:none;padding:0;margin:0}
-    .sidebar li{margin:.5rem 0}
-    .sidebar a{color:var(--muted);text-decoration:none}
-    .sidebar a:hover{color:var(--text)}
-    .panel{background:rgba(2,6,23,.85);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 20px 40px rgba(0,0,0,.35)}
-    .panel h2,.panel h3{margin-top:0}
-    .tag{display:inline-block;padding:.2rem .5rem;border-radius:.5rem;background:#111827;border:1px solid var(--border);color:var(--muted);font-size:.75rem}
-    textarea{width:100%;background:#020617;color:#a5b4fc;border:1px solid var(--border);border-radius:.75rem;padding:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem;resize:none;overflow:hidden}
-    .btn{cursor:pointer;background:linear-gradient(135deg,var(--accent2),var(--accent));border:0;color:#fff;padding:.6rem .9rem;border-radius:.75rem}
-    .btn.secondary{background:#111827;border:1px solid var(--border)}
-    footer{text-align:center;padding:2rem;color:var(--muted)}
-    /* Password Gate */
-    #gate{position:fixed;inset:0;background:radial-gradient(800px 400px at 50% -10%,#1f2937,transparent),#020617;display:grid;place-items:center;z-index:10}
-    #gate .card{background:rgba(2,6,23,.9);border:1px solid var(--border);border-radius:1rem;padding:1.5rem;width:min(420px,90vw);box-shadow:0 30px 60px rgba(0,0,0,.5)}
-    #gate input{width:100%;padding:.7rem .8rem;border-radius:.6rem;border:1px solid var(--border);background:#020617;color:var(--text)}
-    #gate .error{color:#f87171;font-size:.85rem;min-height:1.2em}
-    .hidden{display:none!important}
-    /* 3D mode */
-    .tilt{perspective:1200px}
-    .tilt .tilt-inner{transform-style:preserve-3d;transition:transform .1s}
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #1e293b;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #7c3aed;
+      --accent2: #2563eb;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      margin: 0;
+      background: radial-gradient(1200px 600px at 10% -10%, #111827, transparent), var(--bg);
+      color: var(--text);
+    }
+    header {
+      position: relative;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    header .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    header h1 { margin: 0; font-size: 1.25rem; }
+    nav a { color: white; text-decoration: none; margin-right: 1rem; opacity: .9; }
+    nav a:hover { opacity: 1; text-decoration: underline; }
+    main { padding: 2rem; max-width: 1100px; margin: auto; }
+    .grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .sidebar {
+      background: rgba(2,6,23,.7);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    .sidebar h3 { margin-top: 0; }
+    .sidebar ul { list-style: none; padding: 0; margin: 0; }
+    .sidebar li { margin: .5rem 0; }
+    .sidebar a { color: var(--muted); text-decoration: none; }
+    .sidebar a:hover { color: var(--text); }
+    .disclaimer { background: #1e293b; border-left: 6px solid var(--warn); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 1rem; font-size: .95rem; line-height: 1.5; }
+    .panel { background: rgba(2,6,23,.85); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+    .panel h2, .panel h3 { margin-top: 0; }
+    .tag { display: inline-block; padding: .2rem .5rem; border-radius: .5rem; background: #111827; border: 1px solid var(--border); color: var(--muted); font-size: .75rem; }
+    pre.code-box {
+      background: #020617;
+      color: #a5b4fc;
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      padding: 1rem;
+      overflow: visible;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .85rem;
+      margin-top: .5rem;
+    }
+    .copy-btn {
+      margin-top: .5rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: none;
+      color: white;
+      padding: .5rem .8rem;
+      border-radius: .5rem;
+      font-size: .85rem;
+    }
+    footer { text-align: center; padding: 2rem; color: var(--muted); }
+    #gate { position: fixed; inset: 0; background: radial-gradient(800px 400px at 50% -10%, #1f2937, transparent), #020617; display: grid; place-items: center; z-index: 10; }
+    #gate .card { background: rgba(2,6,23,.9); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; width: min(420px, 90vw); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+    #gate input { width: 100%; padding: .7rem .8rem; border-radius: .6rem; border: 1px solid var(--border); background: #020617; color: var(--text); }
+    #gate .error { color: #f87171; font-size: .85rem; min-height: 1.2em; }
   </style>
 </head>
 <body>
   <div id="gate">
     <div class="card">
       <h2>Enter Access Code</h2>
-      <p class="tag">Chrome • Bookmarklets • Demo</p>
+      <p class="tag">Chrome Only • Bookmarklets • Demo</p>
       <input id="pw" type="password" placeholder="Access code" />
       <div class="error" id="err"></div>
       <button class="btn" onclick="unlock()">Unlock</button>
-      <p style="color:var(--muted);font-size:.8rem;margin-top:.75rem;">Client‑side gate (for fun only).</p>
+      <p style="color:var(--muted); font-size:.8rem; margin-top:.75rem;">Note: This is a simple client-side gate for demonstration only. Bookmarklets will run only in Chrome.</p>
     </div>
   </div>
 
@@ -58,128 +98,89 @@
     <div class="row">
       <h1>Chrome Bookmarklet Hacks</h1>
       <nav>
-        <a href="#3d">3D View</a>
-        <a href="#visual">Visual</a>
-        <a href="#tools">Tools</a>
-        <a href="#games">Games</a>
+        <a href="#bookmarklets">Bookmarklets</a>
+        <a href="#about">About</a>
       </nav>
     </div>
   </header>
 
   <main id="app" class="hidden">
-      <section class="panel">
-        <h2>How to Install Bookmarklets</h2>
-        <ol>
-          <li>Copy a bookmarklet using the <b>Copy</b> button.</li>
-          <li>Open Chrome bookmarks (<span class="tag">Ctrl/Cmd + Shift + O</span>).</li>
-          <li>Create a new bookmark and paste the code into the <b>URL</b> field.</li>
-          <li>Name it anything you like and save.</li>
-          <li>Visit any page and click the bookmark to run it.</li>
-        </ol>
-        <p class="tag">Tip: Bookmarklets run only on the page you click them on.</p>
-      </section>
-
-      <section class="panel">
-        <h2>Disclaimer</h2>
-        <p>
-          These bookmarklets run <b>entirely in your browser</b>. They do not bypass website security,
-          access accounts, or run server‑side. Some may freeze or visually alter pages —
-          simply reload the page to undo effects.
-        </p>
-        <p class="tag">For learning & fun only • Use responsibly</p>
-      </section>
     <div class="grid">
       <aside class="sidebar">
         <h3>Sections</h3>
         <ul>
-          <li><a href="#3d">3D Page View</a></li>
-          <li><a href="#visual">Visual Effects</a></li>
-          <li><a href="#tools">Utilities</a></li>
-          <li><a href="#games">Games / Fun</a></li>
+          <li><a href="#bookmarklets">Bookmarklets Collection</a></li>
+          <li><a href="#about">About This Site</a></li>
         </ul>
         <hr style="border-color:var(--border)" />
-        <p class="tag">PWA • Offline‑friendly</p>
+        <p class="tag">Fullscreen PWA Ready • Chrome Recommended</p>
       </aside>
 
-      <section class="tilt" id="tiltWrap">
-        <div class="tilt-inner">
+      <section>
+        <div class="disclaimer">
+          <strong>Important Disclaimer:</strong>
+          <p>This site provides bookmarklets for <strong>Chrome only</strong>. All scripts run locally in your browser. They do <em>not bypass security</em> or give access to sites you are not allowed to use. Effects are temporary and reloading the page removes them. Use these tools only for learning, testing, or fun.</p>
+          <p><strong>How to Install:</strong></p>
+          <ol>
+            <li>Open Chrome browser.</li>
+            <li>Create a new bookmark in the bookmarks bar.</li>
+            <li>Copy the desired bookmarklet code from the box below.</li>
+            <li>Paste it into the bookmark's URL field.</li>
+            <li>Visit the target page and click the bookmarklet to run it.</li>
+          </ol>
+        </div>
 
-          <div id="3d" class="panel">
-            <h2>3D Page View <span class="tag">Effects</span></h2>
-            <p>Turn any page into a live 3D perspective view.</p>
-            <button class="btn" onclick="enableTilt()">Enable 3D Tilt</button>
-            <button class="btn secondary" onclick="disableTilt()">Disable</button>
-            <h3>Bookmarklet (3D Page)</h3>
-            <textarea rows="3" readonly>javascript:(function(){var js=document.body.appendChild(document.createElement("script"));js.onerror=function(){alert("Error! The Script Could Not Be Loaded!")};js.src="https://rawgit.com/Krazete/bookmarklets/master/tri.js"})();</textarea>
-          </div>
+        <div id="bookmarklets" class="panel">
+          <h2>Bookmarklets Collection <span class="tag">Chrome Only</span></h2>
 
-          <div id="visual" class="panel">
-            <h2>Visual Bookmarklets</h2>
-            <h3>Blur Page</h3>
-            <textarea rows="2" readonly>javascript:(function(){document.body.style.filter='blur(5px)'})();</textarea>
-            <h3>Grayscale</h3>
-            <textarea rows="2" readonly>javascript:(function(){document.body.style.filter='grayscale(100%)'})();</textarea>
-            <h3>Let It Snow</h3>
-            <textarea rows="4" readonly>javascript:(t=>{function i(){this.D=function(){const t=h.atan(this.i/this.d);l.save(),l.translate(this.b,this.a),l.rotate(-t),l.scale(this.e,this.e*h.max(1,h.pow(this.j,.7)/15)),l.drawImage(m,-v/2,-v/2),l.restore()}}window;const h=Math,r=h.random,a=document,o=Date.now;e=(t=>{l.clearRect(0,0,_,f),l.fill(),requestAnimationFrame(e);const i=.001*y.et;y.r();const s=L.et*g;for(var n=0;n<C.length;++n){const t=C[n];t.i=h.sin(s+t.g)*t.h,t.j=h.sqrt(t.i*t.i+t.f),t.a+=t.d*i,t.b+=t.i*i,t.a>w&&(t.a=-u),t.b>b&&(t.b=-u),t.b<-u&&(t.b=b),t.D()}}),s=(t=>{for(var e=0;e<p;++e)C[e].a=r()*(f+u),C[e].b=r()*_}),n=(t=>{c.width=_=innerWidth,c.height=f=innerHeight,w=f+u,b=_+u,s()});class d{constructor(t,e=!0){this._ts=o(),this._p=!0,this._pa=o(),this.d=t,e&&this.s()}get et(){return this.ip?this._pa-this._ts:o()-this._ts}get ip(){return this._p}s(){return this._ts=o()-this.et,this._p=!1,this}r(){return this._pa=this._ts=o(),this}}const c=a.createElement("canvas");H=c.style,H.position="fixed",H.left=0,H.top=0,H.width="100vw",H.height="100vh",H.zIndex="100000",H.pointerEvents="none",a.body.insertBefore(c,a.body.children[0]);const l=c.getContext("2d"),p=300,g=5e-4,u=20;let _=c.width=innerWidth,f=c.height=innerHeight,w=f+u,b=_+u;const v=15.2,m=a.createElement("canvas"),E=m.getContext("2d"),x=E.createRadialGradient(7.6,7.6,0,7.6,7.6,7.6);x.addColorStop(0,"hsla(255,255%,255%,1)"),x.addColorStop(1,"hsla(255,255%,255%,0)"),E.fillStyle=x,E.fillRect(0,0,v,v);let y=new d(0,!0),C=[],L=new d(0,!0);for(var j=0;j<p;++j){const t=new i;t.a=r()*(f+u),t.b=r()*_,t.c=1*(3*r()+.8),t.d=.1*Math.pow(t.c,2.5)*50*(2*r()+1),t.d=t.d<65?65:t.d,t.e=t.c/7.6,t.f=t.d*t.d,t.g=r()*Math.PI/1.3,t.h=15*t.c,t.i=0,t.j=0,C.push(t)}s(),addEventListener("resize",n,!1),e()})()</textarea>
-          </div>
+          <h3>Tri.js 3D Webpage View</h3>
+          <pre class="code-box" id="triCode">javascript:(function(){var js=document.body.appendChild(document.createElement("script"));js.onerror=function(){alert("Error! The Script Could Not Be Loaded!")};js.src="https://rawgit.com/Krazete/bookmarklets/master/tri.js"})();</pre>
+          <button class="copy-btn" onclick="copyCode('triCode', this)">Copy</button>
 
-          <div id="tools" class="panel">
-            <h2>Utility Bookmarklets</h2>
-            <h3>Ad‑B‑Gone</h3>
-            <textarea rows="4" readonly>javascript:(function(){var s=['#ads','.ad','.advertisement','iframe','ins.adsbygoogle'];for(let i of s){document.querySelectorAll(i).forEach(e=>e.remove())}})();</textarea>
-            <h3>Auto Clicker</h3>
-            <textarea rows="4" readonly>javascript:var DELAY=1;var st=document.createElement('style');st.innerHTML='*{cursor:crosshair!important}';document.body.appendChild(st);function add(e){if(!e.isTrusted)return;document.body.removeChild(st);document.body.removeEventListener('click',add);e.preventDefault();(function c(el){el.click();setTimeout(()=>c(el),DELAY)})(e.target)}document.body.addEventListener('click',add,0);</textarea>
-            <h3>FPS Stats</h3>
-            <textarea rows="3" readonly>javascript:(function(){var s=document.createElement('script');s.onload=function(){var st=new Stats();document.body.appendChild(st.dom);(function l(){st.update();requestAnimationFrame(l)})()};s.src='https://mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(s)})();</textarea>
-            <h3>Script Injector</h3>
-            <textarea rows="2" readonly>javascript:(()=>{var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XMB5/ConsoleInject@0bb01e8f/inject.js';document.body.appendChild(s)})();</textarea>
-          </div>
+          <h3>Blur Page</h3>
+          <pre class="code-box" id="blurCode">javascript:(function(){document.body.style.filter='blur(5px)';})();</pre>
+          <button class="copy-btn" onclick="copyCode('blurCode', this)">Copy</button>
 
-          <div id="games" class="panel">
-            <h2>Games / Fun</h2>
-            <h3>Asteroids</h3>
-            <textarea rows="2" readonly>javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://susstuff.repl.co/bm/kickass.js';})();</textarea>
-            <h3>Neal.fun – Perfect Circle</h3>
-            <textarea rows="3" readonly>javascript:(function(){let s=document.querySelector('main svg').getBoundingClientRect(),cx=s.width/2+s.x,cy=s.height/2+s.y,r=s.width/3,d=document.querySelector('main div'),a=0;for(let e=0;e<50;e++){a+=Math.acos(1-Math.pow(60/r,2)/2);let t=Math.round(cx+r*Math.cos(a)),n=Math.round(cy+r*Math.sin(a));0===e&&d.dispatchEvent(new MouseEvent('mousedown',{clientX:t,clientY:n}));d.dispatchEvent(new MouseEvent('mousemove',{clientX:t,clientY:n}))}d.dispatchEvent(new MouseEvent('mouseup'))})();</textarea>
-            <p class="tag">Pranks can freeze pages — reload to stop.</p>
-          </div>
+          <h3>Grayscale</h3>
+          <pre class="code-box" id="grayCode">javascript:(function(){document.body.style.filter='grayscale(100%)';})();</pre>
+          <button class="copy-btn" onclick="copyCode('grayCode', this)">Copy</button>
 
+          <!-- Add other bookmarklets similarly with full height boxes -->
+        </div>
+
+        <div id="about" class="panel">
+          <h2>About This Site</h2>
+          <p>This site is designed as a single-page app to showcase Chrome bookmarklets. Everything runs locally in your browser and can be installed as a PWA for fullscreen use.</p>
         </div>
       </section>
     </div>
   </main>
 
-  <footer><p>Bookmarklets only • Chrome recommended • For learning & fun</p></footer>
+  <footer>
+    <p>Bookmarklets only • Chrome recommended • For fun & learning</p>
+  </footer>
 
   <script>
-    // Auto-size textareas to full code length
-    function autosize(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px'}
-    document.querySelectorAll('textarea').forEach(t=>{autosize(t);t.addEventListener('input',()=>autosize(t))});
+    const PASS = '0128';
+    function unlock(){
+      const v = document.getElementById('pw').value;
+      if(v === PASS){
+        document.getElementById('gate').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+      } else {
+        document.getElementById('err').textContent = 'Incorrect code';
+      }
+    }
+    document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
 
-    // Add copy buttons
-    document.querySelectorAll('textarea').forEach(t=>{
-      const btn=document.createElement('button');
-      btn.className='btn secondary';
-      btn.style.marginTop='.5rem';
-      btn.textContent='Copy';
-      btn.onclick=()=>{
-        navigator.clipboard.writeText(t.value).then(()=>{
-          const prev=btn.textContent;btn.textContent='Copied ✓';
-          setTimeout(()=>btn.textContent=prev,1200);
-        });
-      };
-      t.after(btn);
-    });
-
-
-    const PASS='0128';
-    function unlock(){const v=pw.value;if(v===PASS){gate.classList.add('hidden');app.classList.remove('hidden')}else err.textContent='Incorrect code'}
-    pw.addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
-    // 3D tilt
-    let tiltOn=false;
-    function enableTilt(){tiltOn=true}
-    function disableTilt(){tiltOn=false;document.querySelector('.tilt-inner').style.transform=''}
-    document.addEventListener('mousemove',e=>{if(!tiltOn)return;const r=tiltWrap.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;document.querySelector('.tilt-inner').style.transform=`rotateX(${(-y*10).toFixed(2)}deg) rotateY(${(x*10).toFixed(2)}deg)`});
+    function copyCode(id, btn) {
+      const code = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(code).then(()=>{
+        const original = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        setTimeout(()=>{ btn.textContent = original; }, 1500);
+      });
+    }
   </script>
 </body>
 </html>
