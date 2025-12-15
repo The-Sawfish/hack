@@ -1,270 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chrome Bookmarklet Hacks</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#020617" />
-  <style>
-    :root {
-      --bg: #020617;
-      --panel: #020617;
-      --border: #1e293b;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #7c3aed;
-      --accent2: #2563eb;
-      --warn: #f59e0b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      margin: 0;
-      background: radial-gradient(1200px 600px at 10% -10%, #111827, transparent), var(--bg);
-      color: var(--text);
-    }
-    header {
-      position: relative;
-      padding: 1rem 2rem;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    header h1 { margin: 0; font-size: 1.25rem; }
-    nav a { color: white; text-decoration: none; margin-right: 1rem; opacity: .9; }
-    nav a:hover { opacity: 1; text-decoration: underline; }
-    main { padding: 2rem; max-width: 1100px; margin: auto; }
-    .grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
-    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-    .sidebar {
-      background: rgba(2,6,23,.7);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1rem;
-    }
-    .sidebar h3 { margin-top: 0; }
-    .sidebar ul { list-style: none; padding: 0; margin: 0; }
-    .sidebar li { margin: .5rem 0; }
-    .sidebar a { color: var(--muted); text-decoration: none; }
-    .sidebar a:hover { color: var(--text); }
-    .disclaimer {
-      background: #1e293b;
-      border-left: 4px solid var(--warn);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-    .panel {
-      background: rgba(2,6,23,.85);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,.35);
-    }
-    .panel h2, .panel h3 { margin-top: 0; }
-    .tag { display: inline-block; padding: .2rem .5rem; border-radius: .5rem; background: #111827; border: 1px solid var(--border); color: var(--muted); font-size: .75rem; }
-    code, textarea {
-      width: 100%;
-      background: #020617;
-      color: #a5b4fc;
-      border: 1px solid var(--border);
-      border-radius: .75rem;
-      padding: .75rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .85rem;
-      white-space: pre-wrap;
-      word-break: break-word;
-      overflow: visible;
-    }
-    .code-wrapper { position: relative; margin-top: .5rem; }
-    .copy-btn {
-      position: absolute;
-      top: .5rem;
-      right: .5rem;
-      background: var(--accent2);
-      border: none;
-      color: white;
-      padding: .3rem .6rem;
-      border-radius: .5rem;
-      cursor: pointer;
-      font-size: .75rem;
-    }
-    ol { padding-left: 1.25rem; }
-    .hidden { display: none !important; }
-    .btn { cursor: pointer; background: linear-gradient(135deg, var(--accent2), var(--accent)); border: 0; color: white; padding: .6rem .9rem; border-radius: .75rem; }
-    .btn.secondary { background: #111827; border: 1px solid var(--border); }
-    footer { text-align: center; padding: 2rem; color: var(--muted); }
-    /* Password Gate */
-    #gate {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(800px 400px at 50% -10%, #1f2937, transparent), #020617;
-      display: grid;
-      place-items: center;
-      z-index: 10;
-    }
-    #gate .card {
-      background: rgba(2,6,23,.9);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      width: min(420px, 90vw);
-      box-shadow: 0 30px 60px rgba(0,0,0,.5);
-      text-align: center;
-    }
-    #gate input {
-      width: 100%;
-      padding: .7rem .8rem;
-      border-radius: .6rem;
-      border: 1px solid var(--border);
-      background: #020617;
-      color: var(--text);
-      margin-top: .5rem;
-      margin-bottom: .5rem;
-    }
-    #gate .error { color: #f87171; font-size: .85rem; min-height: 1.2em; margin-top: .5rem; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chrome Bookmarklet Hacks</title>
+<style>
+:root {
+  --bg: #020617;
+  --panel: #020617;
+  --border: #1e293b;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #7c3aed;
+  --accent2: #2563eb;
+  --warn: #f59e0b;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  margin: 0;
+  background: radial-gradient(1200px 600px at 10% -10%, #111827, transparent), var(--bg);
+  color: var(--text);
+}
+header {
+  position: relative;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+header .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+header h1 { margin: 0; font-size: 1.25rem; }
+nav a { color: white; text-decoration: none; margin-right: 1rem; opacity: .9; }
+nav a:hover { opacity: 1; text-decoration: underline; }
+main { padding: 2rem; max-width: 1100px; margin: auto; }
+.grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.sidebar {
+  background: rgba(2,6,23,.7);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.sidebar h3 { margin-top: 0; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { margin: .5rem 0; }
+.sidebar a { color: var(--muted); text-decoration: none; }
+.sidebar a:hover { color: var(--text); }
+.disclaimer {
+  background: #1e293b;
+  border-left: 4px solid var(--warn);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: .75rem;
+}
+.panel {
+  background: rgba(2,6,23,.85);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
+.panel h2, .panel h3 { margin-top: 0; }
+.tag { display: inline-block; padding: .2rem .5rem; border-radius: .5rem; background: #111827; border: 1px solid var(--border); color: var(--muted); font-size: .75rem; }
+code, textarea {
+  width: 100%;
+  background: #020617;
+  color: #a5b4fc;
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  padding: .75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .85rem;
+}
+textarea { resize: vertical; }
+.btn { cursor: pointer; background: linear-gradient(135deg, var(--accent2), var(--accent)); border: 0; color: white; padding: .6rem .9rem; border-radius: .75rem; }
+footer { text-align: center; padding: 2rem; color: var(--muted); }
+#gate { position: fixed; inset: 0; background: radial-gradient(800px 400px at 50% -10%, #1f2937, transparent), #020617; display: grid; place-items: center; z-index: 10; }
+#gate .card { background: rgba(2,6,23,.9); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; width: min(420px, 90vw); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+#gate input { width: 100%; padding: .7rem .8rem; border-radius: .6rem; border: 1px solid var(--border); background: #020617; color: var(--text); }
+#gate .error { color: #f87171; font-size: .85rem; min-height: 1.2em; }
+.hidden { display: none !important; }
+</style>
 </head>
 <body>
-  <!-- Password Gate -->
-  <div id="gate">
-    <div class="card">
-      <h2>Enter Access Code</h2>
-      <p class="tag">Chrome Only • Bookmarklets Demo</p>
-      <input id="pw" type="password" placeholder="Access code" />
-      <div class="error" id="err"></div>
-      <button class="btn" onclick="unlock()">Unlock</button>
-      <p style="color:var(--muted); font-size:.8rem; margin-top:.75rem;">
-        Note: This is a simple client-side gate. Works best in Chrome.
-      </p>
-    </div>
+
+<!-- Password Gate -->
+<div id="gate">
+  <div class="card">
+    <h2>Enter Access Code</h2>
+    <p class="tag">Chrome • Bookmarklets • Demo</p>
+    <input id="pw" type="password" placeholder="Access code" />
+    <div class="error" id="err"></div>
+    <button class="btn" onclick="unlock()">Unlock</button>
+    <p style="color:var(--muted); font-size:.8rem; margin-top:.75rem;">Note: Client-side gate only.</p>
   </div>
+</div>
 
-  <header>
-    <div class="row">
-      <h1>Chrome Bookmarklet Hacks</h1>
-      <nav>
-        <a href="#visual">Visual</a>
-        <a href="#tools">Tools</a>
-        <a href="#blocker">Blockers</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="row">
+    <h1>Chrome Bookmarklet Hacks</h1>
+    <nav>
+      <a href="#3d">3D View</a>
+      <a href="#visual">Visual</a>
+      <a href="#tools">Tools</a>
+      <a href="#blocker">Blockers</a>
+    </nav>
+  </div>
+</header>
 
-  <main id="app" class="hidden">
-    <div class="grid">
-      <aside class="sidebar">
-        <h3>Sections</h3>
+<main id="app" class="hidden">
+  <div class="grid">
+    <aside class="sidebar">
+      <h3>Sections</h3>
+      <ul>
+        <li><a href="#3d">3D Web View</a></li>
+        <li><a href="#visual">Visual Bookmarklets</a></li>
+        <li><a href="#tools">Utility Bookmarklets</a></li>
+        <li><a href="#blocker">Blockers</a></li>
+      </ul>
+    </aside>
+
+    <section>
+      <div class="disclaimer panel">
+        <strong>Disclaimer</strong>
+        <p>Bookmarklets only. Use on sites you are allowed to interact with. Chrome recommended.</p>
+      </div>
+
+      <div id="3d" class="panel">
+        <h2>3D Webpage View <span class="tag">Tri.js</span></h2>
+        <p>Click below to enable a 3D effect on the page.</p>
+        <textarea rows="3" readonly>javascript:(function(){var js=document.body.appendChild(document.createElement("script"));js.onerror=function(){alert("Error! Script Could Not Load")};js.src="https://rawgit.com/Krazete/bookmarklets/master/tri.js"})()</textarea>
+      </div>
+
+      <div id="visual" class="panel">
+        <h2>Visual Bookmarklets</h2>
         <ul>
-          <li><a href="#visual">Visual Bookmarklets</a></li>
-          <li><a href="#tools">Utility Bookmarklets</a></li>
-          <li><a href="#blocker">Blockers</a></li>
+          <li><strong>Blur:</strong> <textarea rows="2" readonly>javascript:(function(){document.body.style.filter='blur(5px)';})()</textarea></li>
+          <li><strong>Grayscale:</strong> <textarea rows="2" readonly>javascript:(function(){document.body.style.filter='grayscale(100%)';})()</textarea></li>
+          <li><strong>Let It Snow:</strong> <textarea rows="3" readonly>javascript:(t=>{/*snow effect code*/})()</textarea></li>
         </ul>
-        <hr style="border-color:var(--border)" />
-        <p class="tag">Fullscreen PWA Ready • Chrome Recommended</p>
-      </aside>
+      </div>
 
-      <section>
-        <div class="disclaimer panel">
-          <strong>Disclaimer & How to Use</strong>
-          <p>
-            This website provides <strong>Chrome bookmarklets</strong> for fun and learning. 
-            You should only use them on websites you are allowed to interact with. 
-            The bookmarklets run <em>locally in your browser</em> and do not affect the server.
-          </p>
-          <p>
-            To install a bookmarklet: open Chrome → go to any site → create a new bookmark → 
-            paste the JavaScript code from the box into the URL of the bookmark → save it. 
-            Then click the bookmark while on the target page.
-          </p>
-          <p>
-            ⚠️ Bookmarklets may be blocked on some pages due to browser security. 
-            Works best in <strong>Chrome desktop</strong>.
-          </p>
-        </div>
+      <div id="tools" class="panel">
+        <h2>Utility Bookmarklets</h2>
+        <ul>
+          <li><strong>Asteroids:</strong> <textarea rows="2" readonly>javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://susstuff.repl.co/bm/kickass.js';})()</textarea></li>
+          <li><strong>Auto Clicker:</strong> <textarea rows="2" readonly>javascript:var DELAY=1;.../*auto-clicker code*/</textarea></li>
+          <li><strong>FPS Stats:</strong> <textarea rows="2" readonly>javascript:(function(){var s=document.createElement('script');s.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};s.src='https://mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(s);})()</textarea></li>
+          <li><strong>Script Injector:</strong> <textarea rows="2" readonly>javascript:(()=>{var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/gh/XMB5/ConsoleInject@0bb01e8f/inject.js";document.body.appendChild(s);})()</textarea></li>
+        </ul>
+      </div>
 
-        <!-- Visual -->
-        <div id="visual" class="panel">
-          <h2>Visual Bookmarklets <span class="tag">Effects</span></h2>
+      <div id="blocker" class="panel">
+        <h2>Blockers & Fun</h2>
+        <ul>
+          <li><strong>Adblocker:</strong> <textarea rows="3" readonly>javascript:(function(){/*adblocker code*/})()</textarea></li>
+          <li><strong>Troll Virus:</strong> <textarea rows="3" readonly>javascript:alert("Virus Detected!");setTimeout(()=>{while(true)location.reload()},1000)</textarea></li>
+          <li><strong>Make You Rich in Bloomer:</strong> <textarea rows="3" readonly>javascript:(function(){/*obfuscated bloomer code*/})()</textarea></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
 
-          <h3>Blurry</h3>
-          <p>Add a blur effect to the page.</p>
-          <div class="code-wrapper">
-            <textarea readonly>javascript:(function () { document.body.style.filter = 'blur(5px)'; })();</textarea>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-          </div>
+<footer>
+<p>Bookmarklets only • Chrome recommended • For fun & learning</p>
+</footer>
 
-          <h3>Grayscale</h3>
-          <p>Convert page colors to grayscale.</p>
-          <div class="code-wrapper">
-            <textarea readonly>javascript:(function () { document.body.style.filter = 'grayscale(100%)'; })();</textarea>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-          </div>
+<script>
+const PASS = '0128';
+function unlock(){
+  const v = document.getElementById('pw').value;
+  if(v === PASS){
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+  } else {
+    document.getElementById('err').textContent = 'Incorrect code';
+  }
+}
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+</script>
 
-          <h3>Let it Snow</h3>
-          <p>Add snow effect to the page.</p>
-          <div class="code-wrapper">
-            <textarea readonly>javascript:(t=>{/*Snow JS code here*/})();</textarea>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-          </div>
-        </div>
-
-        <!-- Tools -->
-        <div id="tools" class="panel">
-          <h2>Utility Bookmarklets <span class="tag">Tools</span></h2>
-
-          <h3>FPS Stats</h3>
-          <p>Show real-time FPS on the page.</p>
-          <div class="code-wrapper">
-            <textarea readonly>javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='https://mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})();</textarea>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-          </div>
-        </div>
-
-        <!-- Blocker -->
-        <div id="blocker" class="panel">
-          <h2>Ad Blocker <span class="tag">Removes Ads</span></h2>
-          <p>Removes common ad elements from the page.</p>
-          <div class="code-wrapper">
-            <textarea readonly>javascript:(function(){/*Adblocker JS*/})();</textarea>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-          </div>
-        </div>
-
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    <p>Bookmarklets only • Chrome recommended • For fun & learning</p>
-  </footer>
-
-  <script>
-    const PASS = '0128';
-    function unlock() {
-      const v = document.getElementById('pw').value.trim();
-      if(v === PASS){
-        document.getElementById('gate').classList.add('hidden');
-        document.getElementById('app').classList.remove('hidden');
-      } else {
-        document.getElementById('err').textContent = 'Incorrect code';
-      }
-    }
-    document.getElementById('pw').addEventListener('keydown', e => { 
-      if(e.key==='Enter') unlock(); 
-    });
-
-    function copyCode(btn) {
-      const code = btn.previousElementSibling;
-      code.select();
-      code.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-      btn.textContent = "Copied ✓";
-      setTimeout(() => btn.textContent = "Copy", 1500);
-    }
-  </script>
 </body>
 </html>
