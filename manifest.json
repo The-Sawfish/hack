@@ -1,7 +1,7 @@
 {
   "name": "Chrome Bookmarklet Hacks",
   "short_name": "Bookmarklet Hacks",
-  "start_url": ".",
+  "start_url": "https://the-sawfish.github.io/hack/",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
