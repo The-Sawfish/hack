@@ -30,7 +30,6 @@
       background: linear-gradient(135deg, var(--accent2), var(--accent));
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    header .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
     header h1 { margin: 0; font-size: 1.25rem; }
     nav a { color: white; text-decoration: none; margin-right: 1rem; opacity: .9; }
     nav a:hover { opacity: 1; text-decoration: underline; }
@@ -48,33 +47,40 @@
     .sidebar li { margin: .5rem 0; }
     .sidebar a { color: var(--muted); text-decoration: none; }
     .sidebar a:hover { color: var(--text); }
-    .disclaimer { background: #1e293b; border-left: 6px solid var(--warn); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 1rem; font-size: .95rem; line-height: 1.5; }
-    .panel { background: rgba(2,6,23,.85); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+    .disclaimer {
+      background: #1e293b;
+      border-left: 4px solid var(--warn);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: .75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .panel {
+      background: rgba(2,6,23,.85);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+    }
     .panel h2, .panel h3 { margin-top: 0; }
     .tag { display: inline-block; padding: .2rem .5rem; border-radius: .5rem; background: #111827; border: 1px solid var(--border); color: var(--muted); font-size: .75rem; }
-    pre.code-box {
+    code, textarea {
+      width: 100%;
       background: #020617;
       color: #a5b4fc;
       border: 1px solid var(--border);
       border-radius: .75rem;
-      padding: 1rem;
-      overflow: visible;
-      white-space: pre-wrap;
-      word-break: break-word;
+      padding: .75rem;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: .85rem;
-      margin-top: .5rem;
+      white-space: pre-wrap;
+      overflow: visible;
     }
-    .copy-btn {
-      margin-top: .5rem;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: none;
-      color: white;
-      padding: .5rem .8rem;
-      border-radius: .5rem;
-      font-size: .85rem;
-    }
+    textarea { resize: vertical; height: auto; }
+    .btn { cursor: pointer; background: linear-gradient(135deg, var(--accent2), var(--accent)); border: 0; color: white; padding: .6rem .9rem; border-radius: .75rem; }
+    .btn.secondary { background: #111827; border: 1px solid var(--border); }
     footer { text-align: center; padding: 2rem; color: var(--muted); }
     #gate { position: fixed; inset: 0; background: radial-gradient(800px 400px at 50% -10%, #1f2937, transparent), #020617; display: grid; place-items: center; z-index: 10; }
     #gate .card { background: rgba(2,6,23,.9); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; width: min(420px, 90vw); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
@@ -86,73 +92,36 @@
   <div id="gate">
     <div class="card">
       <h2>Enter Access Code</h2>
-      <p class="tag">Chrome Only • Bookmarklets • Demo</p>
+      <p class="tag">Chrome • Bookmarklets • Demo</p>
       <input id="pw" type="password" placeholder="Access code" />
       <div class="error" id="err"></div>
       <button class="btn" onclick="unlock()">Unlock</button>
-      <p style="color:var(--muted); font-size:.8rem; margin-top:.75rem;">Note: This is a simple client-side gate for demonstration only. Bookmarklets will run only in Chrome.</p>
+      <p style="color:var(--muted); font-size:.8rem; margin-top:.75rem;">Note: This is a simple client-side gate for fun. Use the correct code to access bookmarklets.</p>
     </div>
   </div>
 
   <header>
-    <div class="row">
-      <h1>Chrome Bookmarklet Hacks</h1>
-      <nav>
-        <a href="#bookmarklets">Bookmarklets</a>
-        <a href="#about">About</a>
-      </nav>
-    </div>
+    <h1>Chrome Bookmarklet Hacks</h1>
   </header>
 
   <main id="app" class="hidden">
-    <div class="grid">
-      <aside class="sidebar">
-        <h3>Sections</h3>
-        <ul>
-          <li><a href="#bookmarklets">Bookmarklets Collection</a></li>
-          <li><a href="#about">About This Site</a></li>
-        </ul>
-        <hr style="border-color:var(--border)" />
-        <p class="tag">Fullscreen PWA Ready • Chrome Recommended</p>
-      </aside>
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> These bookmarklets are designed <strong>specifically for Chrome</strong>. Use them only on pages you are allowed to interact with. Installing a bookmarklet involves creating a new bookmark in Chrome and pasting the code into the URL field. Some bookmarklets may alter page appearance or behavior temporarily. Always be cautious and understand what the code does before running.
+    </div>
 
-      <section>
-        <div class="disclaimer">
-          <strong>Important Disclaimer:</strong>
-          <p>This site provides bookmarklets for <strong>Chrome only</strong>. All scripts run locally in your browser. They do <em>not bypass security</em> or give access to sites you are not allowed to use. Effects are temporary and reloading the page removes them. Use these tools only for learning, testing, or fun.</p>
-          <p><strong>How to Install:</strong></p>
-          <ol>
-            <li>Open Chrome browser.</li>
-            <li>Create a new bookmark in the bookmarks bar.</li>
-            <li>Copy the desired bookmarklet code from the box below.</li>
-            <li>Paste it into the bookmark's URL field.</li>
-            <li>Visit the target page and click the bookmarklet to run it.</li>
-          </ol>
-        </div>
-
-        <div id="bookmarklets" class="panel">
-          <h2>Bookmarklets Collection <span class="tag">Chrome Only</span></h2>
-
-          <h3>Tri.js 3D Webpage View</h3>
-          <pre class="code-box" id="triCode">javascript:(function(){var js=document.body.appendChild(document.createElement("script"));js.onerror=function(){alert("Error! The Script Could Not Be Loaded!")};js.src="https://rawgit.com/Krazete/bookmarklets/master/tri.js"})();</pre>
-          <button class="copy-btn" onclick="copyCode('triCode', this)">Copy</button>
-
-          <h3>Blur Page</h3>
-          <pre class="code-box" id="blurCode">javascript:(function(){document.body.style.filter='blur(5px)';})();</pre>
-          <button class="copy-btn" onclick="copyCode('blurCode', this)">Copy</button>
-
-          <h3>Grayscale</h3>
-          <pre class="code-box" id="grayCode">javascript:(function(){document.body.style.filter='grayscale(100%)';})();</pre>
-          <button class="copy-btn" onclick="copyCode('grayCode', this)">Copy</button>
-
-          <!-- Add other bookmarklets similarly with full height boxes -->
-        </div>
-
-        <div id="about" class="panel">
-          <h2>About This Site</h2>
-          <p>This site is designed as a single-page app to showcase Chrome bookmarklets. Everything runs locally in your browser and can be installed as a PWA for fullscreen use.</p>
-        </div>
-      </section>
+    <div class="panel">
+      <h2>Neal.fun Collection <span class="tag">Games</span></h2>
+      <p>Automatically draws a near-perfect circle on <strong>neal.fun/draw-a-circle</strong>.</p>
+      <ol>
+        <li>Open Chrome.</li>
+        <li>Go to https://neal.fun/draw-a-circle</li>
+        <li>Create a new bookmark.</li>
+        <li>Paste the code below into the bookmark URL.</li>
+        <li>Click the bookmark on the page.</li>
+      </ol>
+      <textarea readonly id="circleCode">javascript:(function()%7Blet%20s%3Ddocument.querySelector(%22main%20svg%22).getBoundingClientRect()%2Ccx%3Ds.width%2F2%2Bs.x%2Ccy%3Ds.height%2F2%2Bs.y%2Cr%3Ds.width%2F3%2Cd%3Ddocument.querySelector(%22main%20div%22)%2Ca%3D0%3Bfor(let%20e%3D0%3Be%3C50%3Be%2B%2B)%7Ba%2B%3DMath.acos(1-Math.pow(60%2Fr%2C2)%2F2)%3Blet%20t%3DMath.round(cx%2Br*Math.cos(a))%2Cn%3DMath.round(cy%2Br*Math.sin(a))%3B0%3D%3De%26%26d.dispatchEvent(new%20MouseEvent(%22mousedown%22%2C%7BclientX%3At%2CclientY%3An%7D))%2Cd.dispatchEvent(new%20MouseEvent(%22mousemove%22%2C%7BclientX%3At%2CclientY%3An%7D))%7Dd.dispatchEvent(new%20MouseEvent(%22mouseup%22))%7D)()</textarea>
+      <button class="btn" onclick="copyCode('circleCode', this)">Copy</button>
+      <span class="tag" id="copyMsg" style="display:none; margin-left:.5rem; color: #7c3aed;">Copied ✓</span>
     </div>
   </main>
 
@@ -161,7 +130,7 @@
   </footer>
 
   <script>
-    const PASS = '0128';
+    const PASS = 'hackme'; // Updated working code
     function unlock(){
       const v = document.getElementById('pw').value;
       if(v === PASS){
@@ -173,13 +142,13 @@
     }
     document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
 
-    function copyCode(id, btn) {
-      const code = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(code).then(()=>{
-        const original = btn.textContent;
-        btn.textContent = 'Copied ✓';
-        setTimeout(()=>{ btn.textContent = original; }, 1500);
-      });
+    function copyCode(id, btn){
+      const textarea = document.getElementById(id);
+      textarea.select();
+      document.execCommand('copy');
+      const msg = btn.nextElementSibling;
+      msg.style.display = 'inline';
+      setTimeout(()=>msg.style.display='none', 1500);
     }
   </script>
 </body>
