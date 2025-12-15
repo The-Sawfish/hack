@@ -27,7 +27,7 @@
     .panel{background:rgba(2,6,23,.85);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 20px 40px rgba(0,0,0,.35)}
     .panel h2,.panel h3{margin-top:0}
     .tag{display:inline-block;padding:.2rem .5rem;border-radius:.5rem;background:#111827;border:1px solid var(--border);color:var(--muted);font-size:.75rem}
-    textarea{width:100%;background:#020617;color:#a5b4fc;border:1px solid var(--border);border-radius:.75rem;padding:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem;resize:vertical}
+    textarea{width:100%;background:#020617;color:#a5b4fc;border:1px solid var(--border);border-radius:.75rem;padding:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem;resize:none;overflow:hidden}
     .btn{cursor:pointer;background:linear-gradient(135deg,var(--accent2),var(--accent));border:0;color:#fff;padding:.6rem .9rem;border-radius:.75rem}
     .btn.secondary{background:#111827;border:1px solid var(--border)}
     footer{text-align:center;padding:2rem;color:var(--muted)}
@@ -67,6 +67,27 @@
   </header>
 
   <main id="app" class="hidden">
+      <section class="panel">
+        <h2>How to Install Bookmarklets</h2>
+        <ol>
+          <li>Copy a bookmarklet using the <b>Copy</b> button.</li>
+          <li>Open Chrome bookmarks (<span class="tag">Ctrl/Cmd + Shift + O</span>).</li>
+          <li>Create a new bookmark and paste the code into the <b>URL</b> field.</li>
+          <li>Name it anything you like and save.</li>
+          <li>Visit any page and click the bookmark to run it.</li>
+        </ol>
+        <p class="tag">Tip: Bookmarklets run only on the page you click them on.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Disclaimer</h2>
+        <p>
+          These bookmarklets run <b>entirely in your browser</b>. They do not bypass website security,
+          access accounts, or run server‑side. Some may freeze or visually alter pages —
+          simply reload the page to undo effects.
+        </p>
+        <p class="tag">For learning & fun only • Use responsibly</p>
+      </section>
     <div class="grid">
       <aside class="sidebar">
         <h3>Sections</h3>
@@ -131,6 +152,26 @@
   <footer><p>Bookmarklets only • Chrome recommended • For learning & fun</p></footer>
 
   <script>
+    // Auto-size textareas to full code length
+    function autosize(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px'}
+    document.querySelectorAll('textarea').forEach(t=>{autosize(t);t.addEventListener('input',()=>autosize(t))});
+
+    // Add copy buttons
+    document.querySelectorAll('textarea').forEach(t=>{
+      const btn=document.createElement('button');
+      btn.className='btn secondary';
+      btn.style.marginTop='.5rem';
+      btn.textContent='Copy';
+      btn.onclick=()=>{
+        navigator.clipboard.writeText(t.value).then(()=>{
+          const prev=btn.textContent;btn.textContent='Copied ✓';
+          setTimeout(()=>btn.textContent=prev,1200);
+        });
+      };
+      t.after(btn);
+    });
+
+
     const PASS='0128';
     function unlock(){const v=pw.value;if(v===PASS){gate.classList.add('hidden');app.classList.remove('hidden')}else err.textContent='Incorrect code'}
     pw.addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
