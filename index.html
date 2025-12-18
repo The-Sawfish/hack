@@ -156,7 +156,7 @@
             <li>Paste the code below into the bookmark URL</li>
             <li>Click the bookmark on the page</li>
           </ol>
-          <textarea readonly>javascript:(function()%7Blet s=document.querySelector("main svg").getBoundingClientRect(),cx=s.width/2+s.x,cy=s.height/2+s.y,r=s.width/3,d=document.querySelector("main div"),a=0;for(let e=0;e<50;e++){a+=Math.acos(1-Math.pow(60/r,2)/2);let t=Math.round(cx+r*Math.cos(a)),n=Math.round(cy+r*Math.sin(a));0===e&d.dispatchEvent(new MouseEvent("mousedown",{clientX:t,clientY:n})),d.dispatchEvent(new MouseEvent("mousemove",{clientX:t,clientY:n}))}d.dispatchEvent(new MouseEvent("mouseup"))})()</textarea>
+          <textarea readonly>javascript:(function () { const svg = document.querySelector("main svg"); const d = document.querySelector("main div"); if (!svg || !d) return; const s = svg.getBoundingClientRect(); const cx = s.x + s.width / 2; const cy = s.y + s.height / 2; const r = Math.min(s.width, s.height) / 3; const points = 100; for (let i = 0; i <= points; i++) { const a = (i / points) * 2 * Math.PI; const x = Math.round(cx + r * Math.cos(a)); const y = Math.round(cy + r * Math.sin(a)); if (i === 0) { d.dispatchEvent(new MouseEvent("mousedown", { clientX: x, clientY: y, button: 0, buttons: 1 })); } d.dispatchEvent(new MouseEvent("mousemove", { clientX: x, clientY: y, buttons: 1 })); } d.dispatchEvent(new MouseEvent("mouseup", { buttons: 0 })); })();</textarea>
           <button class="btn secondary" onclick="copyCode(this)">Copy</button>
           <span class="copied-msg" style="margin-left:.5rem;color:var(--accent);display:none;">Copied!</span>
         </div>
